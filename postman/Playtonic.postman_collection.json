@@ -1,0 +1,344 @@
+{
+	"info": {
+		"_postman_id": "a900125d-0c63-4ff4-9e45-443ac74312ed",
+		"name": "Playtomic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get existing wallet balance",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7c7ad143-516b-4e99-ae9c-a303318c826f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/wallet/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"wallet",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a non existing wallet balance",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "10a95f99-c585-4d95-83a6-57d52caba59e",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.errorMessage).to.eql(\"Wallet not found in database.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/wallet/10",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"wallet",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Withdraw from wallet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "52e4d2e8-ab57-4962-aa12-15b6a29dea72",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/wallet/withdraw/1?amount=5",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"wallet",
+						"withdraw",
+						"1"
+					],
+					"query": [
+						{
+							"key": "amount",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Withdraw from wallet with not enough funds",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "00c46cff-5f02-44ee-aa8f-a2672cd77032",
+						"exec": [
+							"pm.test(\"Status code is 406\", function () {",
+							"    pm.response.to.have.status(406);",
+							"});",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.errorMessage).to.eql(\"Not enough money in your wallet.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/wallet/withdraw/2?amount=10",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"wallet",
+						"withdraw",
+						"2"
+					],
+					"query": [
+						{
+							"key": "amount",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Withdraw from a non existing wallet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bc3f4e1c-764d-4566-9111-ba9f3ff56d95",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.errorMessage).to.eql(\"Wallet not found in database.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/wallet/withdraw/10?amount=5",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"wallet",
+						"withdraw",
+						"10"
+					],
+					"query": [
+						{
+							"key": "amount",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recharge to a wallet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7d5711f3-c85c-459c-ae46-caf55abd6f55",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/wallet/recharge/1?amount=10&service=thirdPartyPaymentService",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"wallet",
+						"recharge",
+						"1"
+					],
+					"query": [
+						{
+							"key": "amount",
+							"value": "10"
+						},
+						{
+							"key": "service",
+							"value": "thirdPartyPaymentService"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recharge to a wallet but get Payment service error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22a57f46-6769-4d2e-8c84-2895343a389f",
+						"exec": [
+							"pm.test(\"Status code is 406\", function () {",
+							"    pm.response.to.have.status(406);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/wallet/recharge/1?amount=5&service=thirdPartyPaymentService",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"wallet",
+						"recharge",
+						"1"
+					],
+					"query": [
+						{
+							"key": "amount",
+							"value": "5"
+						},
+						{
+							"key": "service",
+							"value": "thirdPartyPaymentService"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recharge to a non existing wallet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d332ae3b-a5bd-452b-9bc7-858cbfdd1b72",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.errorMessage).to.eql(\"Wallet not found in database.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/wallet/recharge/10?amount=5&service=thirdPartyPaymentService",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"wallet",
+						"recharge",
+						"10"
+					],
+					"query": [
+						{
+							"key": "amount",
+							"value": "5"
+						},
+						{
+							"key": "service",
+							"value": "thirdPartyPaymentService"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

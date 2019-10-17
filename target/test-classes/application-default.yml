@@ -1,0 +1,4 @@
+#spring.profiles.active: test
+flyway:
+  locations: classpath:db/migration/test
+  url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE;IGNORECASE=TRUE
